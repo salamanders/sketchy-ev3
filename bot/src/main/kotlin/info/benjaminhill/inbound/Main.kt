@@ -6,8 +6,6 @@ package info.benjaminhill.wbb
 
 import mu.KotlinLogging
 
-val LOG = KotlinLogging.logger {}
-
 fun main() {
     LOG.info { "main(): debug:${LOG.isDebugEnabled}" }
 

@@ -1,5 +1,6 @@
 package info.benjaminhill.inbound
 
+import info.benjaminhill.ev3.NormalVector2D
 import info.benjaminhill.wbb.NormalVector2D
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D
 

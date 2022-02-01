@@ -1,32 +1,39 @@
-package info.benjaminhill.inbound
+package info.benjaminhill.ev3
 
+import lejos.robotics.geometry.Rectangle2D
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D
 import java.awt.Rectangle
+import kotlin.math.cos
+import kotlin.math.sin
+import au.edu.federation.utils.Vec2f
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.asCoroutineDispatcher
+import mu.KotlinLogging
 import java.awt.geom.Line2D
 import java.awt.geom.Point2D
-import java.awt.image.BufferedImage
+import java.io.InputStreamReader
+import java.net.*
+import java.util.*
+import java.util.concurrent.Executors
+import java.util.zip.GZIPInputStream
 
-operator fun Vector2D.component1(): kotlin.Double = this.x
-operator fun Vector2D.component2(): kotlin.Double = this.y
+private val logger = KotlinLogging.logger {}
 
-fun angleToVector2D(rad: Double) = Vector2D(Math.cos(rad), Math.sin(rad))
+operator fun Vector2D.component1(): Double = this.x
+operator fun Vector2D.component2(): Double = this.y
+
+fun angleToVector2D(rad: Double) = Vector2D(cos(rad), sin(rad))
 
 fun Rectangle.contains(v: Vector2D): Boolean = contains(v.x.toInt(), v.y.toInt())
 
-fun BufferedImage.getLum(x: Int, y: Int): Float {
-    require(x in 0 until width) { "x:$x outside of $width x $height" }
-    require(y in 0 until height) { "y:$y outside of $width x $height" }
-    val color = getRGB(x, y)
-    val red = color.ushr(16) and 0xFF
-    val green = color.ushr(8) and 0xFF
-    val blue = color.ushr(0) and 0xFF
-    return (red * 0.2126f + green * 0.7152f + blue * 0.0722f) / 255
+internal fun Vec2f.scaleUnitTo(drawingArea: Rectangle2D): Vec2f {
+    require(x in 0f..1f) { "Unit Vec2f had out of bounds x:$x" }
+    require(y in 0f..1f) { "Unit Vec2f had out of bounds y:$y" }
+    val scaledX = drawingArea.x + (drawingArea.width * x)
+    val scaledY = drawingArea.y + (drawingArea.height * y)
+    return Vec2f(scaledX.toFloat(), scaledY.toFloat())
 }
-
-/** Shorter round for the logs */
-val Double.str: String
-    get() = "%.4f".format(this)
-
 
 /**
  * Bresenham's algorithm to find all pixels on a Line2D.

@@ -4,8 +4,10 @@ import au.edu.federation.caliko.FabrikBone2D
 import au.edu.federation.caliko.FabrikChain2D
 import au.edu.federation.caliko.FabrikStructure2D
 import au.edu.federation.utils.Vec2f
-import info.benjaminhill.inbound.bot.logger
+import mu.KotlinLogging
 import java.io.File
+
+private val logger = KotlinLogging.logger {}
 
 val UP = Vec2f(0f, 1f)
 val LEFT = Vec2f(1f, 0f)

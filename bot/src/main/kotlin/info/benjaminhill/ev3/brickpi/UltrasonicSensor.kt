@@ -1,6 +1,5 @@
-package info.benjaminhill.bot.ev3
+package info.benjaminhill.ev3.brickpi
 
-import info.benjaminhill.bot.device.Sensor
 import java.io.File
 
 

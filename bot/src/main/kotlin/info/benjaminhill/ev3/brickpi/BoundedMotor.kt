@@ -1,4 +1,4 @@
-package info.benjaminhill.bot.ev3
+package info.benjaminhill.ev3.brickpi
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*

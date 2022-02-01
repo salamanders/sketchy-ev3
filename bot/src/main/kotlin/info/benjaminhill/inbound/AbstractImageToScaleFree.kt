@@ -1,6 +1,7 @@
 package info.benjaminhill.inbound
 
 import info.benjaminhill.wbb.NormalVector2D
+import mu.KLoggable
 import mu.KotlinLogging
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D
 import java.awt.BasicStroke
@@ -58,8 +59,8 @@ abstract class AbstractImageToScaleFree(fileName: String) : AutoCloseable {
         }
     }
 
-    companion object {
-        val LOG = KotlinLogging.logger {}
+    companion object: KLoggable {
+        override val logger = logger()
 
         fun writeScriptFiles(script: List<NormalVector2D>, name: String) {
             LOG.info { "Script steps: ${script.size}" }

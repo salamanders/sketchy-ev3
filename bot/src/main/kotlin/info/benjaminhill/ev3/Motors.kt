@@ -10,10 +10,10 @@ import lejos.hardware.motor.EV3LargeRegulatedMotor
 import lejos.hardware.motor.EV3MediumRegulatedMotor
 import lejos.hardware.port.MotorPort
 import lejos.robotics.RegulatedMotor
+import mu.KLoggable
 import mu.KotlinLogging
 import kotlin.time.ExperimentalTime
 
-internal val logger = KotlinLogging.logger {}
 
 /**
  * Convenience wrapper for the EV3 motors
@@ -106,8 +106,10 @@ open class Motors : AutoCloseable {
         }
     }
 
-    companion object {
+    companion object: KLoggable {
+        override val logger = logger()
         private val requiresSmoothClose = AtomicBoolean(true)
     }
+
 
 }

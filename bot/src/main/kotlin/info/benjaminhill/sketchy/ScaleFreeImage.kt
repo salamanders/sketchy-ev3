@@ -1,6 +1,8 @@
-package info.benjaminhill.ev3
+package info.benjaminhill.sketchy
 
 
+import info.benjaminhill.ev3.NormalVector2D
+import mu.KLoggable
 import java.awt.image.BufferedImage
 import kotlin.math.abs
 
@@ -85,7 +87,8 @@ private constructor(
         }
     }
 
-    companion object {
+    companion object: KLoggable {
+        override val logger = logger()
         /** Centers the image and scales it down uniformly to a 1x1 max */
         fun BufferedImage.toScaleFreeImage(): ScaleFreeImage {
             val inputDimension: Int
@@ -110,7 +113,7 @@ private constructor(
         }
 
         /** Grabs the lum of any point (scales RGB) from 0.0..1.0 */
-        fun BufferedImage.getLum(x: Int, y: Int): Float {
+        private fun BufferedImage.getLum(x: Int, y: Int): Float {
             require(x in 0 until width) { "x:$x outside of $width x $height" }
             require(y in 0 until height) { "y:$y outside of $width x $height" }
             val color = getRGB(x, y)

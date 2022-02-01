@@ -1,15 +1,14 @@
-package info.benjaminhill.bot.ev3
+package info.benjaminhill.ev3.brickpi
 
-import info.benjaminhill.bot.device.Motor
+import info.benjaminhill.ev3.brickpi.Motor
 import info.benjaminhill.utils.changesToFlow
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
+import mu.KLoggable
 import mu.KotlinLogging
 import java.io.File
 import java.util.*
 import kotlin.time.ExperimentalTime
-
-private val logger = KotlinLogging.logger {}
 
 /**
  * http://docs.ev3dev.org/projects/lego-linux-drivers/en/ev3dev-stretch/motors.html
@@ -59,7 +58,8 @@ open class TachoMotor(override val port: Port) : Motor(portToDir(port, ROOT_DIR)
         RUN_TO_REL("run-to-rel-pos"),
     }
 
-    companion object {
+    companion object: KLoggable {
+        override val logger = logger()
         val ROOT_DIR = File("/sys/class/tacho-motor")
 
         data class Update(

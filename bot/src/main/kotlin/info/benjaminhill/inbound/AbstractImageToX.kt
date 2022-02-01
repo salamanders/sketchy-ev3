@@ -1,5 +1,6 @@
 package info.benjaminhill.inbound
 
+import info.benjaminhill.utils.getFile
 import info.benjaminhill.wbb.NormalVector2D
 import kotlinx.coroutines.asCoroutineDispatcher
 import mu.KotlinLogging
@@ -11,6 +12,34 @@ import java.awt.RenderingHints
 import java.io.File
 import java.util.concurrent.Executors
 import javax.imageio.ImageIO
+
+abstract class AbstractImageToXB(fileName: String) : Runnable, AutoCloseable {
+    protected val dispatcher =
+        Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors()).asCoroutineDispatcher()
+    protected val inputBi = ImageIO.read(getFile(fileName))!!
+    protected val inputDim = Rectangle(inputBi.width, inputBi.height)
+    protected val inputG2D = inputBi.createGraphics()!!.apply {
+        setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
+        color = Color.WHITE
+        stroke = BasicStroke(1f)  // a few mm wide pen?
+    }
+    protected val script = mutableListOf<Vector2D>()
+
+    abstract fun getNextLocation(origin: Vector2D): Vector2D?
+
+    override fun close() {
+        inputG2D.dispose()
+        val name = this.javaClass.simpleName
+
+
+        dispatcher.close()
+    }
+
+    companion object {
+        val LOG = KotlinLogging.logger {}
+    }
+}
+
 
 abstract class AbstractImageToX(fileName: String) : Runnable, AutoCloseable {
     protected val dispatcher = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors()).asCoroutineDispatcher()

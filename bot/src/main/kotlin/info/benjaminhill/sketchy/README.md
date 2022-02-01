@@ -1,0 +1,1 @@
+Classes specific to the current bot configuration

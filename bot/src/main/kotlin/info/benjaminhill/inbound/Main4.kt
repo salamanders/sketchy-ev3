@@ -1,4 +1,4 @@
-package info.benjaminhill.inbound.bot
+package info.benjaminhill.inbound
 
 
 import com.google.cloud.firestore.DocumentChange
