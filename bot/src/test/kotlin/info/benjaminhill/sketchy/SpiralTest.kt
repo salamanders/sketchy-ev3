@@ -1,9 +1,9 @@
 package info.benjaminhill.sketchy
 
-import org.junit.jupiter.api.Test
+import info.benjaminhill.sketchy.drawing.ImageToSpiral
 
 class SpiralTest {
-    @Test
-    fun runImageToSpiral() = runDrawTest(ImageToSpiral(fileName = "images/liberty.png", numberOfSpins = 100), "liberty")
+    @org.junit.Test
+    fun runImageToSpiral() = runDrawTest(ImageToSpiral(fileName = "../web/images/liberty.png", numberOfSpins = 100), "liberty")
 
 }

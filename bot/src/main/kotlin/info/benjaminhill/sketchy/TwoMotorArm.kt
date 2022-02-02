@@ -5,7 +5,7 @@ import au.edu.federation.caliko.FabrikChain2D
 import au.edu.federation.caliko.FabrikStructure2D
 import au.edu.federation.utils.Vec2f
 import com.google.common.primitives.Floats
-import info.benjaminhill.lego.*
+import info.benjaminhill.sketchy.ev3.*
 import info.benjaminhill.utils.r
 import lejos.robotics.RegulatedMotor
 import lejos.robotics.geometry.Rectangle2D

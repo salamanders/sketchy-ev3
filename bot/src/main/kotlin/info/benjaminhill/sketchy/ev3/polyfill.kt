@@ -1,4 +1,4 @@
-package info.benjaminhill.lego
+package info.benjaminhill.sketchy.ev3
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

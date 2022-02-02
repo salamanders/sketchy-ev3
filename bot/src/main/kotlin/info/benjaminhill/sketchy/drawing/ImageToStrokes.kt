@@ -1,7 +1,6 @@
-package info.benjaminhill.drawing
+package info.benjaminhill.sketchy.drawing
 
-import info.benjaminhill.lego.NormalVector2D
-import info.benjaminhill.lego.NormalVector2D.Companion.normalOrNull
+import info.benjaminhill.sketchy.drawing.NormalVector2D.Companion.normalOrNull
 import info.benjaminhill.utils.mapConcurrently
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.asFlow

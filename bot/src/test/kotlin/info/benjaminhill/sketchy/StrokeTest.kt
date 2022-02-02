@@ -1,14 +1,14 @@
 package info.benjaminhill.sketchy
 
-import org.junit.jupiter.api.Test
+import info.benjaminhill.sketchy.drawing.ImageToStrokes
 
 class StrokeTest {
-    @Test
-    fun runImageToStrokesLiberty() = runDrawTest(ImageToStrokes(fileName = "images/liberty.png"), "liberty")
+    @org.junit.Test
+    fun runImageToStrokesLiberty() = runDrawTest(ImageToStrokes(fileName = "../web/images/liberty.png"), "liberty")
 
-    @Test
-    fun runImageToStrokesSW() = runDrawTest(ImageToStrokes(fileName = "images/sw.png"), "sw")
+    @org.junit.Test
+    fun runImageToStrokesSW() = runDrawTest(ImageToStrokes(fileName = "../web/images/sw.png"), "sw")
 
-    @Test
-    fun runImageToStrokesShark() = runDrawTest(ImageToStrokes(fileName = "images/shark.png"), "shark")
+    @org.junit.Test
+    fun runImageToStrokesShark() = runDrawTest(ImageToStrokes(fileName = "../web/images/shark.png"), "shark")
 }

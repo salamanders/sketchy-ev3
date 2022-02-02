@@ -1,6 +1,5 @@
-package info.benjaminhill.drawing
+package info.benjaminhill.sketchy.drawing
 
-import info.benjaminhill.lego.NormalVector2D
 import info.benjaminhill.sketchy.ScaleFreeImage
 import info.benjaminhill.sketchy.ScaleFreeImage.Companion.toScaleFreeImage
 import info.benjaminhill.utils.getFile

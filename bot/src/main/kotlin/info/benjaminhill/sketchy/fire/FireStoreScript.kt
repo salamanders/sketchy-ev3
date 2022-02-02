@@ -1,4 +1,4 @@
-package info.benjaminhill.sketchy
+package info.benjaminhill.sketchy.fire
 
 import com.google.gson.Gson
 import info.benjaminhill.utils.delete

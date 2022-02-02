@@ -1,4 +1,4 @@
-package info.benjaminhill.lego.brickpi
+package info.benjaminhill.sketchy.brickpi
 
 import mu.KotlinLogging
 import java.net.DatagramPacket

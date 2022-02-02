@@ -1,4 +1,4 @@
-package info.benjaminhill.lego
+package info.benjaminhill.sketchy.ev3
 
 import au.edu.federation.utils.Vec2f
 import lejos.robotics.geometry.Rectangle2D

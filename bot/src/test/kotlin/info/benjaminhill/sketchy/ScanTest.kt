@@ -1,9 +1,9 @@
 package info.benjaminhill.sketchy
 
-import org.junit.jupiter.api.Test
+import info.benjaminhill.sketchy.drawing.ImageToScan
 
 class ScanTest {
-    @Test
-    fun runImageToScan() = runDrawTest(ImageToScan(fileName = "images/xwingl.png"), "liberty")
+    @org.junit.Test
+    fun runImageToScan() = runDrawTest(ImageToScan(fileName = "../web/images/xwingl.png"), "liberty")
 
 }

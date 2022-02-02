@@ -1,4 +1,4 @@
-package info.benjaminhill.lego.brickpi
+package info.benjaminhill.sketchy.brickpi
 
 import info.benjaminhill.utils.changesToFlow
 import kotlinx.coroutines.ExperimentalCoroutinesApi

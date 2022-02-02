@@ -1,7 +1,7 @@
 package info.benjaminhill.sketchy
 
 
-import info.benjaminhill.lego.NormalVector2D
+import info.benjaminhill.sketchy.drawing.NormalVector2D
 import mu.KLoggable
 import java.awt.image.BufferedImage
 import java.io.File

@@ -1,9 +1,9 @@
-package info.benjaminhill.drawing
+package info.benjaminhill.sketchy.drawing
 
-import info.benjaminhill.lego.NormalVector2D
-import info.benjaminhill.lego.NormalVector2D.Companion.asNormalVector2D
-import info.benjaminhill.lego.NormalVector2D.Companion.coerceNormalVector2D
-import info.benjaminhill.lego.angleToVector2D
+
+import info.benjaminhill.sketchy.drawing.NormalVector2D.Companion.asNormalVector2D
+import info.benjaminhill.sketchy.drawing.NormalVector2D.Companion.coerceNormalVector2D
+import info.benjaminhill.sketchy.ev3.angleToVector2D
 import mu.KotlinLogging
 import kotlin.math.min
 

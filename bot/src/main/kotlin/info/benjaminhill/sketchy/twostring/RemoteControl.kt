@@ -1,4 +1,4 @@
-package info.benjaminhill.twostring
+package info.benjaminhill.sketchy.twostring
 
 
 import com.google.gson.Gson
@@ -7,9 +7,9 @@ import com.google.gson.JsonParser
 
 
 import com.google.gson.reflect.TypeToken
-import info.benjaminhill.lego.NormalVector2D
-import info.benjaminhill.lego.backgroundPool
-import info.benjaminhill.lego.readTextSupportGZIP
+import info.benjaminhill.sketchy.drawing.NormalVector2D
+import info.benjaminhill.sketchy.ev3.backgroundPool
+import info.benjaminhill.sketchy.ev3.readTextSupportGZIP
 import kotlinx.coroutines.*
 import mu.KotlinLogging
 import java.net.URL

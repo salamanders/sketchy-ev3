@@ -1,6 +1,5 @@
-package info.benjaminhill.drawing
+package info.benjaminhill.sketchy.drawing
 
-import info.benjaminhill.lego.NormalVector2D
 import mu.KLoggable
 import org.apache.commons.math3.geometry.euclidean.twod.Line
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D

@@ -1,4 +1,4 @@
-package info.benjaminhill.lego
+package info.benjaminhill.sketchy.ev3
 
 import au.edu.federation.caliko.FabrikBone2D
 import au.edu.federation.caliko.FabrikChain2D

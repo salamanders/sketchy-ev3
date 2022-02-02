@@ -1,7 +1,6 @@
-package info.benjaminhill.drawing
+package info.benjaminhill.sketchy.drawing
 
-import info.benjaminhill.lego.NormalVector2D
-import info.benjaminhill.lego.NormalVector2D.Companion.normalOrNull
+import info.benjaminhill.sketchy.drawing.NormalVector2D.Companion.normalOrNull
 import mu.KLoggable
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D
 import kotlin.math.cos
@@ -10,7 +9,8 @@ import kotlin.math.sin
 /**
  * Spiral line, squiggle the line in dark areas
  */
-class ImageToSpiral(fileName: String, private val numberOfSpins: Int) : DrawingTechnique(fileName) {
+class ImageToSpiral(fileName: String, private val numberOfSpins: Int) :
+    DrawingTechnique(fileName) {
 
     override fun generateScript(): List<NormalVector2D> {
         val result: MutableList<NormalVector2D> = mutableListOf()

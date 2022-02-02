@@ -1,10 +1,11 @@
-package info.benjaminhill.twostring
+package info.benjaminhill.sketchy.twostring
 
-import info.benjaminhill.lego.NormalVector2D
-import info.benjaminhill.lego.NormalVector2D.Companion.asNormalVector2D
-import info.benjaminhill.lego.NormalVector2D.Companion.checkDiagonalsNormal
-import info.benjaminhill.lego.backgroundPool
-import info.benjaminhill.lego.brickpi.str
+
+import info.benjaminhill.sketchy.drawing.NormalVector2D
+import info.benjaminhill.sketchy.drawing.NormalVector2D.Companion.asNormalVector2D
+import info.benjaminhill.sketchy.drawing.NormalVector2D.Companion.checkDiagonalsNormal
+import info.benjaminhill.sketchy.ev3.backgroundPool
+import info.benjaminhill.sketchy.ev3.str
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay

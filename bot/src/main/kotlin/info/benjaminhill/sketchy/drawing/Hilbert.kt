@@ -1,7 +1,6 @@
-package info.benjaminhill.drawing
+package info.benjaminhill.sketchy.drawing
 
-import info.benjaminhill.lego.NormalVector2D
-import info.benjaminhill.lego.NormalVector2D.Companion.normalOrNull
+import info.benjaminhill.sketchy.drawing.NormalVector2D.Companion.normalOrNull
 import mu.KLoggable
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D
 import kotlin.math.cos
@@ -20,7 +19,8 @@ import kotlin.math.sqrt
  * R → +LF−RFR−FL+
  * Here, F means "draw forward", − means "turn left 90°", and + means "turn right 90°"
  */
-class Hilbert(fileName: String, private val maxDepth: Int) : DrawingTechnique(fileName) {
+class Hilbert(fileName: String, private val maxDepth: Int) :
+    DrawingTechnique(fileName) {
 
     private var headingDeg = 0
     private var location = Vector2D(0.0, 0.0)

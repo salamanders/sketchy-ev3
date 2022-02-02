@@ -1,4 +1,4 @@
-package info.benjaminhill.lego
+package info.benjaminhill.sketchy.drawing
 
 import info.benjaminhill.utils.r
 import info.benjaminhill.utils.round
