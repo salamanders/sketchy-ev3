@@ -1,9 +1,10 @@
 package info.benjaminhill.sketchy
 
+import info.benjaminhill.drawing.DrawingTechnique
 import org.junit.jupiter.api.Assertions
 import java.io.File
 
-fun runDrawTest(wrappedDrawer: AbstractDrawing, sourceImageName: String) {
+fun runDrawTest(wrappedDrawer: DrawingTechnique, sourceImageName: String) {
     val name = wrappedDrawer.javaClass.simpleName
 
     File("scriptgen/output_${name}_$sourceImageName.png").also {

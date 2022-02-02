@@ -1,9 +1,11 @@
 package info.benjaminhill.sketchy
 
 
-import info.benjaminhill.ev3.NormalVector2D
+import info.benjaminhill.lego.NormalVector2D
 import mu.KLoggable
 import java.awt.image.BufferedImage
+import java.io.File
+import javax.imageio.ImageIO
 import kotlin.math.abs
 
 /**
@@ -27,18 +29,18 @@ private constructor(
     /** Scale up by the image dimension then sample from the backing array */
     fun getInk(point: NormalVector2D): Float = inputImageInk[pointToIndex(point)]
 
-    fun whiteout(p1: NormalVector2D, p2: NormalVector2D) =applyToPixelsOnLine(p1, p2) { inkIndex->
-            inputImageInk[inkIndex] = 0f
-        }
+    fun whiteout(p1: NormalVector2D, p2: NormalVector2D) = applyToPixelsOnLine(p1, p2) { inkIndex ->
+        inputImageInk[inkIndex] = 0f
+    }
 
     fun getInkAvgSqs(p1: NormalVector2D, p2: NormalVector2D): Double {
         var sum = 0f
         var count = 0
         applyToPixelsOnLine(p1, p2) { inkIndex ->
-            sum= inputImageInk[inkIndex]
+            sum = inputImageInk[inkIndex]
             count++
         }
-        return (sum/count).toDouble()
+        return (sum / count).toDouble()
     }
 
     /**
@@ -50,7 +52,7 @@ private constructor(
     private inline fun applyToPixelsOnLine(
         p1: NormalVector2D,
         p2: NormalVector2D,
-        applyToEachPoint:(inkIndex:Int)->Unit
+        applyToEachPoint: (inkIndex: Int) -> Unit
     ) {
         val precision = 1.0
         val x1 = p1.x * inputDimension
@@ -64,8 +66,8 @@ private constructor(
 
         var x: Double = x1
         var y: Double = y1
-        var ix:Int
-        var iy:Int
+        var ix: Int
+        var iy: Int
         var error: Double = dx - dy
 
         while (abs(x - x2) > 0.9 || abs(y - y2) > 0.9) {
@@ -81,14 +83,18 @@ private constructor(
             ix = x.toInt()
             iy = y.toInt()
 
-            if(iy < inputDimension && ix < inputDimension) {
+            if (iy < inputDimension && ix < inputDimension) {
                 applyToEachPoint(iy * inputDimension + ix)
             }
         }
     }
 
-    companion object: KLoggable {
+    companion object : KLoggable {
         override val logger = logger()
+
+        fun fileToScaleFree(location: String): ScaleFreeImage =
+            ImageIO.read(File(location).toURI().toURL())!!.toScaleFreeImage()
+
         /** Centers the image and scales it down uniformly to a 1x1 max */
         fun BufferedImage.toScaleFreeImage(): ScaleFreeImage {
             val inputDimension: Int
@@ -101,7 +107,6 @@ private constructor(
                 Pair((this.height - this.width) / 2, 0)
             }
             val inputImageInk = FloatArray(inputDimension * inputDimension) { 0f }
-
             for (x in 0 until this.width) {
                 for (y in 0 until this.height) {
                     val actualX = x + xScoot
