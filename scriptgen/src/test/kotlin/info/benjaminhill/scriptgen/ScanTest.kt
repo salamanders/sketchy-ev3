@@ -1,6 +1,4 @@
-package info.benjaminhill.sketchy
-
-import info.benjaminhill.sketchy.drawing.ImageToScan
+package info.benjaminhill.scriptgen
 
 class ScanTest {
     @org.junit.Test

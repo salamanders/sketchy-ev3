@@ -1,4 +1,4 @@
-package info.benjaminhill.sketchy.drawing
+package info.benjaminhill.scriptgen
 
 import mu.KLoggable
 import org.apache.commons.math3.geometry.euclidean.twod.Line

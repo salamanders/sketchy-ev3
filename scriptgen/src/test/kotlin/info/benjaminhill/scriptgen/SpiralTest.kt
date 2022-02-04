@@ -1,6 +1,4 @@
-package info.benjaminhill.sketchy
-
-import info.benjaminhill.sketchy.drawing.ImageToSpiral
+package info.benjaminhill.scriptgen
 
 class SpiralTest {
     @org.junit.Test

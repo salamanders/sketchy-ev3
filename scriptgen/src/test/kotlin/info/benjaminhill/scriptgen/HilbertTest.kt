@@ -1,6 +1,4 @@
-package info.benjaminhill.sketchy
-
-import info.benjaminhill.sketchy.drawing.Hilbert
+package info.benjaminhill.scriptgen
 
 class HilbertTest {
     @org.junit.Test

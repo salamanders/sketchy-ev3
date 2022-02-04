@@ -1,6 +1,7 @@
 # LEGO Draw Bot
 
-A LEGO EV3 with two motors winding strings that drag a dry erase marker around a whiteboard.
+A LEGO EV3 Mindstorms with two motors: either winding strings, or an arm, 
+that drag a dry erase marker around a whiteboard.
 
 ## Architecture
 
@@ -16,59 +17,66 @@ Paste the output into the config.json file and upload to web server.
 
 ## One Time Setup
 
-1. Clone and load this project in IntelliJ to get Kotlin/Maven support
-1. [Setup the Bot OS](client/README.md)
-1. Setup a web host for your config.json file (I like firebase)
+### Dev Environment
 
-   gcloud components update && gcloud components install beta npm install -g firebase-tools
+Clone and load this project in IntelliJ to get Kotlin/Maven support
 
-LeJOS clients are fun!  Fix the brick's IP address in pom.xml, and run maven:deploy
+### Setup the Bot OS
 
-    mvn deploy
-    mvn antrun:run
-
-To SSH into the robot:
-
-    ssh -oKexAlgorithms=+diffie-hellman-group1-sha1 root@192.168.43.179
-    root@EV3:/home/lejos/programs# jrun -cp whiteboardbot-0.0.1-SNAPSHOT-jar-with-dependencies.jar info.benjaminhill.wbb.MainKt
-
-Copying files
-
-    scp -oKexAlgorithms=+diffie-hellman-group1-sha1 ./x.jar root@192.168.86.250:/home/root/lejos/lib/
-
-To view console Run ev3console or Eclipse: ev3control
-http://www.lejos.org/ev3/docs/
-
-    mvn versions:display-dependency-updates
-    mvn dependency:copy-dependencies
-
-To recreate the runtime
+To recreate the runtime:
 
 1. Download from http://www.oracle.com/technetwork/java/embedded/downloads/java-embedded-java-se-download-359230.html
 2. NOTE: The "-g" is from [stack overflow](https://stackoverflow.com/questions/23275519/jdwp-in-embedded-jre-in-java-8)
 
-    gunzip ejdk-8-fcs-b132-linux-arm-sflt-03_mar_2014.tar.gz
-    tar xvf ejdk-8-fcs-b132-linux-arm-sflt-03_mar_2014.tar
-    cd ejdk1.8.0/bin
-    export JAVA_HOME=/usr
-    ./jrecreate.sh -g --dest ../../ejre-8u1-linux-arm-15_may_2015 --profile compact2 --vm client
-    cd ../..
-    tar cvf ejre-8u1-linux-arm-15_may_2015.tar ejre-8u1-linux-arm-15_may_2015
-    gzip ejre-8u1-linux-arm-15_may_2015.tar
+```bash
+gunzip ejdk-8-fcs-b132-linux-arm-sflt-03_mar_2014.tar.gz
+tar xvf ejdk-8-fcs-b132-linux-arm-sflt-03_mar_2014.tar
+cd ejdk1.8.0/bin
+export JAVA_HOME=/usr
+./jrecreate.sh -g --dest ../../ejre-8u1-linux-arm-15_may_2015 --profile compact2 --vm client
+cd ../..
+tar cvf ejre-8u1-linux-arm-15_may_2015.tar ejre-8u1-linux-arm-15_may_2015
+gzip ejre-8u1-linux-arm-15_may_2015.tar
+```
+
+### Setup a web host for your config.json file (I like firebase)
+
+```bash
+gcloud components update && gcloud components install beta npm install -g firebase-tools
+```
+## Start Testing Code
+
+LeJOS clients are fun!  Fix the brick's IP address in pom.xml, and run maven:deploy
+
+```bash
+mvn deploy
+mvn antrun:run
+```
+
+To SSH into the robot:
+```bash
+ssh -oKexAlgorithms=+diffie-hellman-group1-sha1 root@192.168.43.179
+root@EV3:/home/lejos/programs# jrun -cp sketchy-ev3-0.0.1-SNAPSHOT-jar-with-dependencies.jar info.benjaminhill.sketchy.MainKt
+```
+Copying files
+```bash
+scp -oKexAlgorithms=+diffie-hellman-group1-sha1 ./x.jar root@192.168.86.250:/home/root/lejos/lib/
+```
+To view console Run ev3console or Eclipse: ev3control
+http://www.lejos.org/ev3/docs/
 
 ## Deploy
-
-    # jar to bot, only when you make a change to client code
-    mvn deploy 
-    # Edit the contents of public/config.json (or whatever you put your script in)
-    firebase deploy # script to cloud, every time you want a new script
-
+```bash
+# jar to bot, only when you make a change to client code
+mvn deploy 
+# Edit the contents of public/config.json (or whatever you put your script in)
+firebase deploy # script to cloud, every time you want a new script
+```
 ## TODO
 
 - [ ] Script selection
 - [ ] Fix the "squashed head" issue
 - [ ] Move to https://github.com/ev3dev-lang-java/ev3dev-lang-java
-
 - [ ] (Later) MQTT bidirectional communication with Firestore
 
 * https://cloud.google.com/community/tutorials/cloud-iot-firestore-config
@@ -86,5 +94,3 @@ To recreate the runtime
 * https://github.com/patriciogonzalezvivo/vPlotter
 * http://fabacademy.org/archives/2013/labs/amsterdam/class_15_machinedesign/math.html
 * https://gist.github.com/pfdevmuller/473d03765906f5e25791
-
-

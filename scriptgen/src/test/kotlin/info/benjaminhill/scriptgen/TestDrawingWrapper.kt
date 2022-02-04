@@ -1,11 +1,11 @@
-package info.benjaminhill.sketchy
+package info.benjaminhill.scriptgen
 
 import junit.framework.TestCase.assertTrue
 import java.io.File
 
-fun runDrawTest(wrappedDrawer: info.benjaminhill.sketchy.drawing.DrawingTechnique, sourceImageName: String) {
+fun runDrawTest(wrappedDrawer: DrawingTechnique, sourceImageName: String) {
     val name = wrappedDrawer.javaClass.simpleName
-
+    File("scriptgen/").mkdirs()
     File("scriptgen/output_${name}_$sourceImageName.png").also {
         it.delete() // cleanup leftovers, but we want the output to stick around, so we can look at it
         wrappedDrawer.exportToImage(it)

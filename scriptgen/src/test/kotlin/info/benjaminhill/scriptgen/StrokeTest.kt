@@ -1,6 +1,4 @@
-package info.benjaminhill.sketchy
-
-import info.benjaminhill.sketchy.drawing.ImageToStrokes
+package info.benjaminhill.scriptgen
 
 class StrokeTest {
     @org.junit.Test

@@ -1,8 +1,8 @@
-package info.benjaminhill.sketchy.drawing
+package info.benjaminhill.scriptgen
 
 
-import info.benjaminhill.sketchy.drawing.NormalVector2D.Companion.asNormalVector2D
-import info.benjaminhill.sketchy.drawing.NormalVector2D.Companion.coerceNormalVector2D
+import info.benjaminhill.scriptgen.NormalVector2D.Companion.asNormalVector2D
+import info.benjaminhill.scriptgen.NormalVector2D.Companion.coerceNormalVector2D
 import info.benjaminhill.sketchy.ev3.angleToVector2D
 import mu.KotlinLogging
 import kotlin.math.min

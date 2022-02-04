@@ -1,7 +1,6 @@
-package info.benjaminhill.sketchy.drawing
+package info.benjaminhill.scriptgen
 
-import info.benjaminhill.sketchy.ScaleFreeImage
-import info.benjaminhill.sketchy.ScaleFreeImage.Companion.toScaleFreeImage
+import info.benjaminhill.scriptgen.ScaleFreeImage.Companion.toScaleFreeImage
 import info.benjaminhill.utils.getFile
 import java.io.File
 import javax.imageio.ImageIO
