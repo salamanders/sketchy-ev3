@@ -25,3 +25,5 @@ hs_err_pid*
 /bot/bot.iml
 /.idea/encodings.xml
 /bot/target/
+/scriptgen/scriptgen.iml
+/scriptgen/target/
