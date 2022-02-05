@@ -16,12 +16,13 @@
     <name>info.benjaminhill.sketchy bot</name>
 
     <properties>
-        <brick.host>192.168.43.179</brick.host>
+        <brick.host>192.168.86.45</brick.host>
         <brick.home>/home/lejos/programs</brick.home>
         <brick.user>root</brick.user>
         <brick.debug.port>4000</brick.debug.port>
-        <project.main.class>info.benjaminhill.sketchy.bot.MainKt</project.main.class>
+        <project.main.class>info.benjaminhill.sketchy.MainKt</project.main.class>
         <debug>true</debug>
+        <!--<assembly.skipAssembly>true</assembly.skipAssembly>-->
     </properties>
 
     <dependencies>
@@ -117,6 +118,7 @@
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
+                    <skipAssembly>${assembly.skipAssembly}</skipAssembly>
                 </configuration>
                 <executions>
                     <execution>

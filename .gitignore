@@ -27,3 +27,4 @@ hs_err_pid*
 /bot/target/
 /scriptgen/scriptgen.iml
 /scriptgen/target/
+/all.iml
