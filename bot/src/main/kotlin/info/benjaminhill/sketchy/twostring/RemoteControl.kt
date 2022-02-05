@@ -7,9 +7,9 @@ import com.google.gson.JsonParser
 
 
 import com.google.gson.reflect.TypeToken
-import info.benjaminhill.sketchy.drawing.NormalVector2D
 import info.benjaminhill.sketchy.ev3.backgroundPool
 import info.benjaminhill.sketchy.ev3.readTextSupportGZIP
+import info.benjaminhill.utils.NormalVector2D
 import kotlinx.coroutines.*
 import mu.KotlinLogging
 import java.net.URL

@@ -1,6 +1,7 @@
 package info.benjaminhill.scriptgen
 
-import info.benjaminhill.scriptgen.NormalVector2D.Companion.normalOrNull
+import info.benjaminhill.utils.NormalVector2D
+import info.benjaminhill.utils.NormalVector2D.Companion.normalOrNull
 import info.benjaminhill.utils.mapConcurrently
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.asFlow

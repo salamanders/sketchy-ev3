@@ -1,11 +1,10 @@
 package info.benjaminhill.sketchy.twostring
 
-
-import info.benjaminhill.sketchy.drawing.NormalVector2D
-import info.benjaminhill.sketchy.drawing.NormalVector2D.Companion.asNormalVector2D
-import info.benjaminhill.sketchy.drawing.NormalVector2D.Companion.checkDiagonalsNormal
 import info.benjaminhill.sketchy.ev3.backgroundPool
 import info.benjaminhill.sketchy.ev3.str
+import info.benjaminhill.utils.NormalVector2D
+import info.benjaminhill.utils.NormalVector2D.Companion.asNormalVector2D
+import info.benjaminhill.utils.NormalVector2D.Companion.checkDiagonalsNormal
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay

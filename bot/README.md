@@ -1,7 +1,7 @@
 # LEGO Draw Bot
 
-A LEGO EV3 Mindstorms with two motors: either winding strings, or an arm, 
-that drag a dry erase marker around a whiteboard.
+A LEGO EV3 Mindstorms with two motors: either winding strings, or an arm, that drag a dry erase marker around a
+whiteboard.
 
 ## Architecture
 
@@ -44,6 +44,7 @@ gzip ejre-8u1-linux-arm-15_may_2015.tar
 ```bash
 gcloud components update && gcloud components install beta npm install -g firebase-tools
 ```
+
 ## Start Testing Code
 
 LeJOS clients are fun!  Fix the brick's IP address in pom.xml, and run maven:deploy
@@ -54,24 +55,30 @@ mvn antrun:run
 ```
 
 To SSH into the robot:
+
 ```bash
 ssh -oKexAlgorithms=+diffie-hellman-group1-sha1 root@192.168.43.179
 root@EV3:/home/lejos/programs# jrun -cp sketchy-ev3-0.0.1-SNAPSHOT-jar-with-dependencies.jar info.benjaminhill.sketchy.MainKt
 ```
+
 Copying files
+
 ```bash
 scp -oKexAlgorithms=+diffie-hellman-group1-sha1 ./x.jar root@192.168.86.250:/home/root/lejos/lib/
 ```
+
 To view console Run ev3console or Eclipse: ev3control
 http://www.lejos.org/ev3/docs/
 
 ## Deploy
+
 ```bash
 # jar to bot, only when you make a change to client code
 mvn deploy 
 # Edit the contents of public/config.json (or whatever you put your script in)
 firebase deploy # script to cloud, every time you want a new script
 ```
+
 ## TODO
 
 - [ ] Script selection

@@ -1,5 +1,6 @@
 package info.benjaminhill.scriptgen
 
+import info.benjaminhill.utils.NormalVector2D
 import mu.KLoggable
 import org.apache.commons.math3.geometry.euclidean.twod.Line
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D

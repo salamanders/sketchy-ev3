@@ -2,9 +2,13 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>info.benjaminhill.sketchy</groupId>
+        <artifactId>all</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
 
-    <groupId>info.benjaminhill.sketchy</groupId>
+    <modelVersion>4.0.0</modelVersion>
     <artifactId>bot</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
@@ -12,62 +16,20 @@
     <name>info.benjaminhill.sketchy bot</name>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <kotlin.version>1.6.10</kotlin.version>
-        <kotlin.code.style>official</kotlin.code.style>
-        <junit.version>4.13.2</junit.version>
-
         <brick.host>192.168.43.179</brick.host>
         <brick.home>/home/lejos/programs</brick.home>
         <brick.user>root</brick.user>
         <brick.debug.port>4000</brick.debug.port>
-
         <project.main.class>info.benjaminhill.sketchy.bot.MainKt</project.main.class>
-
         <debug>true</debug>
     </properties>
-    <repositories>
-        <repository>
-            <id>mavenCentral</id>
-            <url>https://repo1.maven.org/maven2/</url>
-        </repository>
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
-    </repositories>
-    <distributionManagement>
-        <repository>
-            <id>internal.repo</id>
-            <name>Internal repo</name>
-            <url>file:///tmp/repo</url>
-        </repository>
-    </distributionManagement>
+
     <dependencies>
+
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib-jdk8</artifactId>
             <version>${kotlin.version}</version>
-        </dependency>
-
-
-        <dependency>
-            <groupId>org.nield</groupId>
-            <artifactId>kotlin-statistics</artifactId>
-            <version>1.2.1</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.imgscalr/imgscalr-lib -->
-        <dependency>
-            <groupId>org.imgscalr</groupId>
-            <artifactId>imgscalr-lib</artifactId>
-            <version>4.2</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.salamanders</groupId>
-            <artifactId>utils</artifactId>
-            <version>650888b6bf</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.github.bdeneuter/lejos-ev3-api -->
@@ -81,19 +43,6 @@
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna</artifactId>
             <version>5.10.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.salamanders</groupId>
-            <artifactId>caliko</artifactId>
-            <version>57bd94f33d</version>
-        </dependency>
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13.2</version>
-            <scope>test</scope>
         </dependency>
 
     </dependencies>
@@ -131,7 +80,6 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <jvmTarget>1.8</jvmTarget>
                     <args>
                         <arg>-Xopt-in=kotlin.time.ExperimentalTime</arg>
                         <arg>-Xopt-in=kotlin.RequiresOptIn</arg>
@@ -156,10 +104,6 @@
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -290,29 +234,6 @@
                 <version>3.0.0</version>
             </plugin>
 
-
-            <plugin>
-                <inherited>true</inherited>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-enforcer-plugin</artifactId>
-                <version>3.0.0</version>
-                <executions>
-                    <execution>
-                        <id>enforce-maven-3</id>
-                        <goals>
-                            <goal>enforce</goal>
-                        </goals>
-                        <configuration>
-                            <rules>
-                                <requireMavenVersion>
-                                    <version>3.8.1</version>
-                                </requireMavenVersion>
-                            </rules>
-                            <fail>true</fail>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
 
         </plugins>
     </build>

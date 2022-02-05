@@ -1,6 +1,7 @@
 package info.benjaminhill.scriptgen
 
-import info.benjaminhill.scriptgen.NormalVector2D.Companion.normalOrNull
+import info.benjaminhill.utils.NormalVector2D
+import info.benjaminhill.utils.NormalVector2D.Companion.normalOrNull
 import mu.KLoggable
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D
 import kotlin.math.cos

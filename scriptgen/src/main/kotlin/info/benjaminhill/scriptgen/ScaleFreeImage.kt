@@ -1,6 +1,7 @@
 package info.benjaminhill.scriptgen
 
 
+import info.benjaminhill.utils.NormalVector2D
 import mu.KLoggable
 import java.awt.image.BufferedImage
 import java.io.File
