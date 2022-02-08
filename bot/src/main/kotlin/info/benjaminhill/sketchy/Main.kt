@@ -3,17 +3,34 @@ package info.benjaminhill.sketchy
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.runBlocking
+import lejos.hardware.lcd.LCD
 import lejos.hardware.motor.BaseRegulatedMotor
 import lejos.hardware.port.SensorPort
 import lejos.hardware.sensor.EV3TouchSensor
 import mu.KotlinLogging
+import java.util.*
 
 private val logger = KotlinLogging.logger {}
 
-fun main() {
+val keyboard = flow<Char> {
+    Scanner(System.`in`).use { reader ->
+        reader.useDelimiter("")
+        while (true) {
+            val char = reader.next().lowercase()
+            if (char.isNotBlank()) {
+                emit(char[0])
+            }
+        }
+    }
+}
+
+fun main() = runBlocking {
     println("Hello, World")
     TwoMotorArm().use { tmd ->
-        tmd.pressButtonsUntilPose(tmd.shoulder, tmd.elbow)
+        collectTachoMeasurements(tmd)
+
+        //tmd.pressButtonsUntilPose(tmd.shoulder, tmd.elbow)
     }
     println("Goodbye!")
 
@@ -60,6 +77,34 @@ fun main() {
     t.printDeepStackTrace()
 }
      */
+}
+
+private suspend fun collectTachoMeasurements(tmd: TwoMotorArm) {
+    keyboard.collectIndexed { i, c ->
+        logger.info { "Key $i: $c" }
+        when (c) {
+            'q' -> {
+                tmd.shoulder.stop(false)
+                tmd.elbow.stop(false)
+                "shoulder: ${tmd.shoulder.tachoCount}".let {
+                    println(it)
+                    LCD.drawString(it, 0, 0 * LCD.FONT_HEIGHT)
+                }
+                "elbow: ${tmd.elbow.tachoCount}".let {
+                    println(it)
+                    LCD.drawString(it, 0, 1 * LCD.FONT_HEIGHT)
+                }
+            }
+            'w' -> tmd.shoulder.rotate(1)
+            's' -> tmd.shoulder.rotate(-1)
+            'a' -> tmd.elbow.rotate(1)
+            'd' -> tmd.elbow.rotate(-1)
+            'f' -> {
+                tmd.shoulder.flt()
+                tmd.elbow.flt()
+            }
+        }
+    }
 }
 
 
