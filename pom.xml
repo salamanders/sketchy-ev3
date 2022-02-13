@@ -25,6 +25,8 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <kotlin.compiler.jvmTarget>1.8</kotlin.compiler.jvmTarget>
+
+        <kotlin.coroutine.version>1.6.0-native-mt</kotlin.coroutine.version>
     </properties>
     <repositories>
         <repository>
@@ -39,10 +41,40 @@
     <dependencies>
 
         <dependency>
+            <groupId>com.github.jcastro-inf</groupId>
+            <artifactId>commons-math4</artifactId>
+            <version>598edc1273</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.salamanders</groupId>
+            <artifactId>ezstats</artifactId>
+            <version>3e3c246c18</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.github.salamanders</groupId>
             <artifactId>utils</artifactId>
-            <version>153ca719bf</version>
+            <version>a9b1fd396a</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.github.salamanders</groupId>
+            <artifactId>caliko</artifactId>
+            <version>57bd94f33d</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jetbrains.kotlinx</groupId>
+            <artifactId>kotlinx-coroutines-core</artifactId>
+            <version>${kotlin.coroutine.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.microutils</groupId>
+            <artifactId>kotlin-logging-jvm</artifactId>
+            <version>2.1.21</version>
+        </dependency>
+
 
         <dependency>
             <groupId>junit</groupId>
@@ -50,25 +82,11 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
-
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-math3</artifactId>
-            <version>3.6.1</version>
-            <scope>compile</scope>
-        </dependency>
-
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-test-junit</artifactId>
             <version>${kotlin.version}</version>
             <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.salamanders</groupId>
-            <artifactId>caliko</artifactId>
-            <version>57bd94f33d</version>
         </dependency>
 
     </dependencies>

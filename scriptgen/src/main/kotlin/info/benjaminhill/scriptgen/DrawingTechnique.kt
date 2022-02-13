@@ -1,9 +1,7 @@
 package info.benjaminhill.scriptgen
 
 import info.benjaminhill.scriptgen.ScaleFreeImage.Companion.fileToScaleFree
-import info.benjaminhill.scriptgen.ScaleFreeImage.Companion.toScaleFreeImage
 import info.benjaminhill.utils.NormalVector2D
-import info.benjaminhill.utils.getFile
 import java.io.File
 import javax.imageio.ImageIO
 
@@ -20,7 +18,7 @@ abstract class DrawingTechnique(fileName: String) {
     internal abstract fun generateScript(): List<NormalVector2D>
 
     fun exportToImage(outputFile: File) {
-        ImageIO.write(script.toImage(), "png", outputFile)
+        ImageIO.write(script.toImage(sfi.toImage()), "png", outputFile)
     }
 
     fun exportToScript(outputFile: File) {

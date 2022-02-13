@@ -15,7 +15,7 @@ import lejos.hardware.lcd.LCD
 import lejos.hardware.motor.EV3LargeRegulatedMotor
 import lejos.hardware.port.MotorPort
 import mu.KotlinLogging
-import org.apache.commons.math3.geometry.euclidean.twod.Vector2D
+import org.apache.commons.math4.geometry.euclidean.twod.Vector2D
 import kotlin.coroutines.CoroutineContext
 import kotlin.math.abs
 import kotlin.math.sqrt

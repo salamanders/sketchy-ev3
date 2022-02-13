@@ -3,44 +3,45 @@ package info.benjaminhill.scriptgen
 
 import info.benjaminhill.utils.NormalVector2D
 import mu.KLoggable
+import org.imgscalr.Scalr
+import java.awt.Color
 import java.awt.image.BufferedImage
 import java.io.File
 import javax.imageio.ImageIO
 import kotlin.math.abs
+import kotlin.math.sqrt
 
 /**
  * A square scale free image of lum values
  * All access to the input and output images are done in a normalized manner (0.0 until 1.0)
  * Used for converting images into drawing commands.
- * Resolution is maintained from the original image.
- * @param inputDimension the max res (width or height) of input image
+ * Brighter = more ink (black background)
  */
 class ScaleFreeImage
 private constructor(
-    private val inputDimension: Int,
     private val inputImageInk: FloatArray,
 ) {
     private fun pointToIndex(point: NormalVector2D): Int {
-        val x = (point.x * inputDimension).toInt()
-        val y = (point.y * inputDimension).toInt()
-        return y * inputDimension + x
+        val x = (point.x * RESOLUTION).toInt()
+        val y = (point.y * RESOLUTION).toInt()
+        return y * RESOLUTION + x
     }
 
     /** Scale up by the image dimension then sample from the backing array */
     fun getInk(point: NormalVector2D): Float = inputImageInk[pointToIndex(point)]
 
-    fun whiteout(p1: NormalVector2D, p2: NormalVector2D) = applyToPixelsOnLine(p1, p2) { inkIndex ->
+    fun erase(p1: NormalVector2D, p2: NormalVector2D) = applyToPixelsOnLine(p1, p2) { inkIndex ->
         inputImageInk[inkIndex] = 0f
     }
 
-    fun getInkAvgSqs(p1: NormalVector2D, p2: NormalVector2D): Double {
-        var sum = 0f
+    fun getInkRms(p1: NormalVector2D, p2: NormalVector2D): Double {
+        var sum = 0.0
         var count = 0
         applyToPixelsOnLine(p1, p2) { inkIndex ->
-            sum = inputImageInk[inkIndex]
+            sum = (inputImageInk[inkIndex] * inputImageInk[inkIndex]).toDouble()
             count++
         }
-        return (sum / count).toDouble()
+        return sqrt(sum / count)
     }
 
     /**
@@ -55,10 +56,10 @@ private constructor(
         applyToEachPoint: (inkIndex: Int) -> Unit
     ) {
         val precision = 1.0
-        val x1 = p1.x * inputDimension
-        val y1 = p1.y * inputDimension
-        val x2 = p2.x * inputDimension
-        val y2 = p2.y * inputDimension
+        val x1 = p1.x * RESOLUTION
+        val y1 = p1.y * RESOLUTION
+        val x2 = p2.x * RESOLUTION
+        val y2 = p2.y * RESOLUTION
         val sx: Double = if (x1 < x2) precision else -1 * precision
         val sy: Double = if (y1 < y2) precision else -1 * precision
         val dx: Double = abs(x2 - x1)
@@ -83,38 +84,47 @@ private constructor(
             ix = x.toInt()
             iy = y.toInt()
 
-            if (iy < inputDimension && ix < inputDimension) {
-                applyToEachPoint(iy * inputDimension + ix)
+            if (iy < RESOLUTION && ix < RESOLUTION) {
+                applyToEachPoint(iy * RESOLUTION + ix)
             }
         }
+    }
+
+    /** Render a script into a sample image, good for testing */
+    fun toImage(): BufferedImage {
+        val outputImage = BufferedImage(RESOLUTION, RESOLUTION, BufferedImage.TYPE_INT_RGB)
+        for (x in 0 until RESOLUTION) {
+            for (y in 0 until RESOLUTION) {
+                outputImage.setRGB(x, y, Color.getHSBColor(.5f, 1f, inputImageInk[y * RESOLUTION + x]).rgb)
+            }
+        }
+        return outputImage
     }
 
     companion object : KLoggable {
         override val logger = logger()
 
+        const val RESOLUTION = 500
+
+        /**
+         * Converts from any reachable BufferedImage to a scale free image, backed by a fixed size float array.
+         * Black is considered "ink" and is inverted to higher Lum.
+         * Centers and squares the image by adding white padding prior to converting.
+         */
         fun fileToScaleFree(location: String): ScaleFreeImage =
-            ImageIO.read(File(location).toURI().toURL())!!.toScaleFreeImage()
+            locationToBufferedImage(location).toScaleFreeImage()
 
-        /** Centers the image and scales it down uniformly to a 1x1 max */
-        fun BufferedImage.toScaleFreeImage(): ScaleFreeImage {
-            val inputDimension: Int
+        /** Centers the image and scales it down uniformly to a RESOLUTION square */
+        private fun BufferedImage.toScaleFreeImage(): ScaleFreeImage {
+            val resizedBI = this.resize(RESOLUTION).pad(RESOLUTION / 2).centerCrop(RESOLUTION)
 
-            val (xScoot, yScoot) = if (this.width > this.height) {
-                inputDimension = this.width
-                Pair(0, (this.width - this.height) / 2)
-            } else {
-                inputDimension = this.height
-                Pair((this.height - this.width) / 2, 0)
-            }
-            val inputImageInk = FloatArray(inputDimension * inputDimension) { 0f }
-            for (x in 0 until this.width) {
-                for (y in 0 until this.height) {
-                    val actualX = x + xScoot
-                    val actualY = y + yScoot
-                    inputImageInk[actualY * inputDimension + actualX] = 1 - this.getLum(x, y)
+            val inputImageInk = FloatArray(resizedBI.width * resizedBI.height) { 0f }
+            for (x in 0 until resizedBI.width) {
+                for (y in 0 until resizedBI.height) {
+                    inputImageInk[y * resizedBI.width + x] = 1 - resizedBI.getLum(x, y)
                 }
             }
-            return ScaleFreeImage(inputDimension, inputImageInk)
+            return ScaleFreeImage(inputImageInk)
         }
 
         /** Grabs the lum of any point (scales RGB) from 0.0..1.0 */
@@ -127,6 +137,20 @@ private constructor(
             val blue = color.ushr(0) and 0xFF
             return (red * 0.2126f + green * 0.7152f + blue * 0.0722f) / 255
         }
+
+        private fun locationToBufferedImage(location: String) =
+            ImageIO.read(File(location).toURI().toURL())!!
+
+        private fun BufferedImage.resize(
+            targetSize: Int,
+            method: Scalr.Method = Scalr.Method.ULTRA_QUALITY
+        ): BufferedImage = Scalr.resize(this, method, targetSize)
+
+        private fun BufferedImage.pad(padding: Int, color: Color = Color.WHITE): BufferedImage =
+            Scalr.pad(this, padding, color)
+
+        private fun BufferedImage.centerCrop(pixels: Int): BufferedImage =
+            Scalr.crop(this, (this.width - pixels) / 2, (this.height - pixels) / 2, pixels, pixels)
     }
 }
 

@@ -3,19 +3,18 @@ package info.benjaminhill.scriptgen
 import java.io.File
 
 fun main() {
-    val image = "xwingl"
-    val outputFolder = File("scriptgen/")
+    val image = "falcon"
+    val method = "particle"
+    val outputFolder = File("scriptgen/output/").apply { mkdirs() }
 
-    println("Scripting an image.")
-    val algo: DrawingTechnique = ImageToStrokes(
-        fileName = "scriptgen/images/$image.png",
-        strokes = 8_000,
-        searchSteps = 25_000,
+    val inputImageLocation = "scriptgen/images/$image.png"
+    val outputImageFile = outputFolder.resolve("${method}_${image}.png")
+    val outputScriptFile = outputFolder.resolve("${method}_${image}.txt")
+    val dt: DrawingTechnique = ParticleSquiggles(
+        fileName = inputImageLocation,
     )
-    val name = "strokes"
 
-    outputFolder.mkdirs()
-    algo.exportToImage(outputFolder.resolve("output_${name}_$image.png"))
-    algo.exportToScript(outputFolder.resolve("output_${name}_$image.txt"))
+    dt.exportToImage(outputImageFile)
+    dt.exportToScript(outputScriptFile)
 }
 

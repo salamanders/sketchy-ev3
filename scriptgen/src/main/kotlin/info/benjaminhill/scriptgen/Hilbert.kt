@@ -3,7 +3,7 @@ package info.benjaminhill.scriptgen
 import info.benjaminhill.utils.NormalVector2D
 import info.benjaminhill.utils.NormalVector2D.Companion.normalOrNull
 import mu.KLoggable
-import org.apache.commons.math3.geometry.euclidean.twod.Vector2D
+import org.apache.commons.math4.geometry.euclidean.twod.Vector2D
 import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt

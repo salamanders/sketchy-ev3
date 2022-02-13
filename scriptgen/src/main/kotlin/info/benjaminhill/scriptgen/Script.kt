@@ -2,8 +2,8 @@ package info.benjaminhill.scriptgen
 
 import info.benjaminhill.utils.NormalVector2D
 import mu.KLoggable
-import org.apache.commons.math3.geometry.euclidean.twod.Line
-import org.apache.commons.math3.geometry.euclidean.twod.Vector2D
+import org.apache.commons.math4.geometry.euclidean.twod.Line
+import org.apache.commons.math4.geometry.euclidean.twod.Vector2D
 import org.w3c.dom.Element
 import java.awt.BasicStroke
 import java.awt.Color
@@ -23,27 +23,30 @@ open class Script(
     private val points: List<NormalVector2D>
 ) {
     /** Render a script into a sample image, good for testing */
-    fun toImage(): BufferedImage {
-        val outputImageRes = 2_000
+    fun toImage(backgroundImage: BufferedImage? = null): BufferedImage {
 
         /** A sample rendering */
-        val outputImage = BufferedImage(outputImageRes, outputImageRes, BufferedImage.TYPE_INT_RGB)
+        val outputImage = backgroundImage ?: BufferedImage(
+            ScaleFreeImage.RESOLUTION,
+            ScaleFreeImage.RESOLUTION,
+            BufferedImage.TYPE_INT_RGB
+        )
         val outputG2d = outputImage.createGraphics()!!.apply {
-            color = Color.WHITE
-            fillRect(0, 0, outputImage.width, outputImage.height)
+            if (backgroundImage == null) {
+                color = Color.BLACK
+                fillRect(0, 0, outputImage.width, outputImage.height)
+            }
             setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
-            color = Color.BLACK
+            color = Color(255, 0, 0, 150)
             // a few mm wide pen?
-            stroke = BasicStroke((1f / 1000) * outputImageRes)
+            stroke = BasicStroke(1f)
         }
 
-        // TODO: Needs a better way to tell if a point matters or not.
-        // distinctBy {(it.x / plotterResolution).roundToInt() to (it.y / plotterResolution).roundToInt() }
         this.points.map {
-            Vector2D(it.x, it.y).scalarMultiply(outputImageRes.toDouble())
+            Vector2D(it.x, it.y).scalarMultiply(ScaleFreeImage.RESOLUTION.toDouble())
         }.zipWithNext().forEach { (a, b) ->
-            check(a.x.roundToInt() in 0..outputImageRes)
-            check(a.y.roundToInt() in 0..outputImageRes)
+            check(a.x.roundToInt() in 0..ScaleFreeImage.RESOLUTION)
+            check(a.y.roundToInt() in 0..ScaleFreeImage.RESOLUTION)
             outputG2d.drawLine(a.x.roundToInt(), a.y.roundToInt(), b.x.roundToInt(), b.y.roundToInt())
         }
 

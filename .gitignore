@@ -29,3 +29,5 @@ hs_err_pid*
 /scriptgen/target/
 /all.iml
 /scriptgen/output_*
+/scriptgen/output/*
+

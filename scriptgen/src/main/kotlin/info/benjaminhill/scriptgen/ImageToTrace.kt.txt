@@ -1,6 +1,6 @@
 package info.benjaminhill.inbound
 
-import org.apache.commons.math3.geometry.euclidean.twod.Vector2D
+import org.apache.commons.math4.geometry.euclidean.twod.Vector2D
 import java.awt.BasicStroke
 import java.awt.Color
 import java.awt.RenderingHints

@@ -78,8 +78,6 @@ scp -oKexAlgorithms=+diffie-hellman-group1-sha1 -c 3des-cbc .\target\bot-1.0-SNA
 To view console Run ev3console or Eclipse: ev3control
 http://www.lejos.org/ev3/docs/
 
-
-
 ## TODO
 
 - [ ] Script selection

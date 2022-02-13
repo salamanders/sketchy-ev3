@@ -1,15 +1,12 @@
 package info.benjaminhill.scriptgen
 
+import info.benjaminhill.utils.LogInfrequently
 import info.benjaminhill.utils.NormalVector2D
 import info.benjaminhill.utils.NormalVector2D.Companion.normalOrNull
-import info.benjaminhill.utils.mapConcurrently
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.runBlocking
+import info.benjaminhill.utils.r
+import kotlinx.coroutines.*
 import mu.KLoggable
-import org.apache.commons.math3.geometry.euclidean.twod.Vector2D
+import org.apache.commons.math4.geometry.euclidean.twod.Vector2D
 import java.util.concurrent.ThreadLocalRandom
 import kotlin.math.abs
 
@@ -27,28 +24,33 @@ class ImageToStrokes(
     private val minPctHop: Double = 0.0001,
 ) : DrawingTechnique(fileName) {
 
-    override fun generateScript(): List<NormalVector2D> = runBlocking(Dispatchers.Default) {
-        // Seed at center
+    @OptIn(ExperimentalCoroutinesApi::class)
+    override fun generateScript(): List<NormalVector2D> = runBlocking(Dispatchers.IO) {
         val points = mutableListOf(NormalVector2D(.5, .5))
+        val runSpeedLogger = LogInfrequently()
+        val ema = ExponentialMovingAverage(alpha = 0.05)
         for (i in 0..strokes) {
-            if (i % 250 == 0) {
-                logger.info { "$i of $strokes" }
-            }
+            runSpeedLogger.hit()
             val currentLocation = points.last()
-            val allPossibleNext: List<Pair<NormalVector2D, Double>> = (0..searchSteps).toList()
-                .asFlow().mapConcurrently {
-                    getRandomLocation(currentLocation)
-                }.filterNotNull().toList()
 
-            if (allPossibleNext.size.toDouble() / searchSteps < .1) {
+            val launched: List<Deferred<Pair<NormalVector2D, Double>?>> =
+                (0..searchSteps).map { async { getRandomLocation(currentLocation) } }
+            val allPossibleNext: List<Pair<NormalVector2D, Double>> = launched.awaitAll().filterNotNull()
+
+            if (allPossibleNext.size.toDouble() / searchSteps < .2) {
                 logger.warn { "Excluded too many possible next steps: ${allPossibleNext.size}" }
             }
             if (allPossibleNext.isEmpty()) {
                 logger.warn { "Had a fully empty possible next step list, likely a bug." }
             }
-            val (bestPt: NormalVector2D, _) = allPossibleNext.maxByOrNull { it.second }!!
+            val (bestPt: NormalVector2D, bestLineScore) = allPossibleNext.maxByOrNull { it.second }!!
+            val emaNext = ema.average(bestLineScore)
+            if (i % 250 == 0) {
+                logger.info { "$i of $strokes, best score=${bestLineScore.r}, ema=${emaNext.r}" }
+            }
+
             // White-out the current move
-            sfi.whiteout(currentLocation, bestPt)
+            sfi.erase(currentLocation, bestPt)
             points.add(bestPt)
         }
         return@runBlocking points
@@ -71,7 +73,7 @@ class ImageToStrokes(
             //LOG.info { "Too small a hop, not great. (${origin.distance(potentialNextPoint)})" }
             return null
         }
-        val avgInk = sfi.getInkAvgSqs(origin, potentialNextPoint)
+        val avgInk = sfi.getInkRms(origin, potentialNextPoint)
         return Pair(potentialNextPoint, avgInk)
     }
 
