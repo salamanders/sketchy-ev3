@@ -141,15 +141,15 @@ private constructor(
         private fun locationToBufferedImage(location: String) =
             ImageIO.read(File(location).toURI().toURL())!!
 
-        private fun BufferedImage.resize(
+        fun BufferedImage.resize(
             targetSize: Int,
             method: Scalr.Method = Scalr.Method.ULTRA_QUALITY
         ): BufferedImage = Scalr.resize(this, method, targetSize)
 
-        private fun BufferedImage.pad(padding: Int, color: Color = Color.WHITE): BufferedImage =
+        fun BufferedImage.pad(padding: Int, color: Color = Color.WHITE): BufferedImage =
             Scalr.pad(this, padding, color)
 
-        private fun BufferedImage.centerCrop(pixels: Int): BufferedImage =
+        fun BufferedImage.centerCrop(pixels: Int): BufferedImage =
             Scalr.crop(this, (this.width - pixels) / 2, (this.height - pixels) / 2, pixels, pixels)
     }
 }

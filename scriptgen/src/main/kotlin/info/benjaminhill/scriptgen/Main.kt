@@ -1,8 +1,12 @@
 package info.benjaminhill.scriptgen
 
 import java.io.File
+import javax.imageio.ImageIO
 
 fun main() {
+    val sprinkles = Sprinkles(ImageIO.read(File("scriptgen/images/liberty.png")))
+    sprinkles.sprinkle()
+    /*
     val image = "falcon"
     val method = "particle"
     val outputFolder = File("scriptgen/output/").apply { mkdirs() }
@@ -16,5 +20,7 @@ fun main() {
 
     dt.exportToImage(outputImageFile)
     dt.exportToScript(outputScriptFile)
+
+     */
 }
 
